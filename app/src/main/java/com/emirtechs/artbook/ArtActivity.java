@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.emirtechs.artbook.databinding.ActivityArtBinding;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.ByteArrayOutputStream;
+
 public class ArtActivity extends AppCompatActivity {
 
     private ActivityArtBinding binding;
@@ -41,7 +43,36 @@ public class ArtActivity extends AppCompatActivity {
     }
 
     public void save(View view) {
+        String name = binding.nameText.getText().toString();
+        String artistName = binding.artistText.getText().toString();
+        String year = binding.yearText.getText().toString();
 
+        Bitmap smallImage = makeSmallerImage(selectedImage,300);
+
+        ByteArrayOutputStream outputStream=new ByteArrayOutputStream();
+        smallImage.compress(Bitmap.CompressFormat.JPEG,50,outputStream);
+        byte[] bytes=outputStream.toByteArray();
+
+    }
+
+    public Bitmap makeSmallerImage(Bitmap image, int maximumSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        double bitmapRatio = width / height;
+
+        if (bitmapRatio > 1) {
+
+            width = maximumSize;
+            height = (int) (width / bitmapRatio);
+
+
+        } else {
+            height = maximumSize;
+            width = (int) (height * bitmapRatio);
+        }
+
+        return image.createScaledBitmap(image, width, height, true);
     }
 
     public void select(View view) {
@@ -51,18 +82,18 @@ public class ArtActivity extends AppCompatActivity {
                 Snackbar.make(view, "Permission needed for gallery", Snackbar.LENGTH_INDEFINITE).setAction("Give Permission", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+                        permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
                     }
                 }).show();
 
             } else {
-permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+                permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
             }
 
 
         } else {
             Intent intentToGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-activityResultLauncher.launch(intentToGallery);
+            activityResultLauncher.launch(intentToGallery);
         }
 
     }
