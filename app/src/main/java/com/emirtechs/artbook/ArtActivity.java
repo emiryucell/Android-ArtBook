@@ -43,7 +43,9 @@ public class ArtActivity extends AppCompatActivity {
         setContentView(view);
         registerLauncher();
 
+
     }
+
 
     public void save(View view) {
         String name = binding.nameText.getText().toString();
@@ -66,13 +68,13 @@ public class ArtActivity extends AppCompatActivity {
             sqLiteStatement.bindString(2, artistName);
             sqLiteStatement.bindString(3, year);
             sqLiteStatement.bindBlob(4, bytes);
-sqLiteStatement.execute();
+            sqLiteStatement.execute();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        Intent intent=new Intent(ArtActivity.this,MainActivity.class);
+        Intent intent = new Intent(ArtActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 
@@ -82,7 +84,7 @@ sqLiteStatement.execute();
         int width = image.getWidth();
         int height = image.getHeight();
 
-        float bitmapRatio =(float) width / (float) height;
+        float bitmapRatio = (float) width / (float) height;
 
         if (bitmapRatio > 1) {
 
