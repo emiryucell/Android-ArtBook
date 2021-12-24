@@ -56,7 +56,7 @@ public class ArtActivity extends AppCompatActivity {
             binding.artistText.setText("");
             binding.yearText.setText("");
             binding.button.setVisibility(View.VISIBLE);
-            binding.imageView.setImageResource(R.drawable.ic_launcher_foreground);
+            binding.imageView.setImageResource(R.drawable.selectimage);
         } else {
             int artId = intent.getIntExtra("artId", 1);
             binding.button.setVisibility(View.INVISIBLE);
